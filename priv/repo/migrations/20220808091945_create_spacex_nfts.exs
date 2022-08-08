@@ -9,7 +9,6 @@ defmodule DigitalMannaApp.Repo.Migrations.CreateSpacexNfts do
       add :image, :string
       add :minted_at, :utc_datetime
 
-      timestamps()
     end
 
     create unique_index(:spacex_nfts, [:nft_id])

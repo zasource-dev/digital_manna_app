@@ -17,8 +17,6 @@ defmodule DigitalMannaApp.Nfts.Schema.SpaceXNFT do
     field :name, :string
     field :nft_id, :string
     field :minted_at, :utc_datetime
-
-    timestamps()
   end
 
   @doc false
@@ -33,7 +31,11 @@ defmodule DigitalMannaApp.Nfts.Schema.SpaceXNFT do
     from spx in SpaceXNFT, as: :spacex_nft
   end
 
+  def is_nft_id(query, nft_id) do
+    from [spacex_nft: spx] in query, where: spx.nft_id == ^nft_id
+  end
   def ordered_by_minted_at(query) do
     from [spacex_nft: spx] in query, order_by: [desc: :minted_at]
   end
+
 end
