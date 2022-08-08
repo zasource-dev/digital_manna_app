@@ -1,9 +1,9 @@
-defmodule DigitalMannaApp.Nfts.SpaceXApi do
+defmodule DigitalMannaApp.Nfts.SpaceX.Api do
   @moduledoc """
   A module that consumes the SpaceX GraphQL Api
   """
 
-  alias DigitalMannaApp.Nfts.SpaceXApi.Query
+  alias DigitalMannaApp.Nfts.SpaceX.Query
 
   @doc """
   Establishes a connection to the SpaceX GraphQL API
@@ -23,6 +23,11 @@ defmodule DigitalMannaApp.Nfts.SpaceXApi do
     Map.get(data, "ships")
   end
 
-  defp query(gql_query), do: Neuron.query(gql_query)
+  defp query(gql_query) do
+    with :ok <- connect() do
+      Neuron.query(gql_query)
+    end
+  end
+
   defp graphql_url(), do: Application.fetch_env!(:digital_manna_app, :spacex)[:url]
 end

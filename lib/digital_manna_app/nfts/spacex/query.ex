@@ -1,4 +1,4 @@
-defmodule DigitalMannaApp.Nfts.SpaceXApi.Query do
+defmodule DigitalMannaApp.Nfts.SpaceX.Query do
   @moduledoc """
   A module for defining graphql queries for SpaceX API
 
