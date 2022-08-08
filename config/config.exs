@@ -17,6 +17,15 @@ config :digital_manna_app, DigitalMannaAppWeb.Endpoint,
   pubsub_server: DigitalMannaApp.PubSub,
   live_view: [signing_salt: "S9jyzhvw"]
 
+config :digital_manna_app, :foundation,
+  url: "https://gateway.thegraph.com/api/",
+  secret: "foundation"
+
+config :digital_manna_app, :spacex,
+  url: "https://api.spacex.land/graphql/",
+  secret: "spacex"
+
+
 # Configures the mailer
 #
 # By default it uses the "Local" adapter which stores the emails
@@ -28,6 +37,7 @@ config :digital_manna_app, DigitalMannaApp.Mailer, adapter: Swoosh.Adapters.Loca
 
 # Swoosh API client is needed for adapters other than SMTP.
 config :swoosh, :api_client, false
+
 
 # Configure esbuild (the version is required)
 config :esbuild,
