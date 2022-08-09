@@ -18,13 +18,16 @@ config :digital_manna_app, DigitalMannaAppWeb.Endpoint,
   live_view: [signing_salt: "S9jyzhvw"]
 
 config :digital_manna_app, :foundation,
-  url: "https://gateway.thegraph.com/api/",
-  secret: "foundation"
+  url: "https://gateway.thegraph.com/api/[api-key]/subgraphs/id/33mhqfVG26N2V8pGNoEpnF5pSr2LbLg8VQRy7PL5EydY",
+  secret: System.get_env("FOUNDATION_GRAPH_API_KEY") || "1a0b45781499d71087c693bb463ce59b"
 
 config :digital_manna_app, :spacex,
   url: "https://api.spacex.land/graphql/",
   secret: "spacex"
 
+# Clients
+config :digital_manna_app,
+  foundation_graph_client: DigitalMannaApp.Nfts.Foundation.GraphClient
 
 # Configures the mailer
 #
