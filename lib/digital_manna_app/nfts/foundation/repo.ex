@@ -15,4 +15,10 @@ defmodule DigitalMannaApp.Nfts.FoundationRepo do
     |> FoundationNFT.ordered_by_minted_at()
     |> Repo.all()
   end
+
+  def add_foundation_nft(attrs \\ %{}) do
+    %FoundationNFT{}
+    |> FoundationNFT.changeset(attrs)
+    |> Repo.insert!()
+  end
 end

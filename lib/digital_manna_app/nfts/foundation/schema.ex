@@ -1,4 +1,7 @@
 defmodule DigitalMannaApp.Nfts.Schema.FoundationNFT do
+  @moduledoc """
+  A schema module for Foundation NFTs
+  """
   use Ecto.Schema
   import Ecto.Changeset
   import Ecto.Query
