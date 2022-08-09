@@ -26,7 +26,8 @@ config :digital_manna_app, DigitalMannaAppWeb.Endpoint,
   secret_key_base: "00cchE4SVvhw0Jtl1aH5GwWv1AS6NQbFDbumhKnKn4BU03RHdwiM4n7tmjgZPge3",
   watchers: [
     # Start the esbuild watcher by calling Esbuild.install_and_run(:default, args)
-    esbuild: {Esbuild, :install_and_run, [:default, ~w(--sourcemap=inline --watch)]}
+    esbuild: {Esbuild, :install_and_run, [:default, ~w(--sourcemap=inline --watch)]},
+    tailwind: {Tailwind, :install_and_run, [:default, ~w(--watch)]}
   ]
 
 # ## SSL Support

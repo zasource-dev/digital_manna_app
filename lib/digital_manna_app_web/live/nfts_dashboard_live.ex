@@ -2,8 +2,10 @@ defmodule DigitalMannaAppWeb.Live.NftsDashboardLive do
   @moduledoc false
 
   use DigitalMannaAppWeb, :live_view
-
   alias DigitalMannaApp.Nfts.Manna, as: MannaNFTs
+
+  # Components
+  alias DigitalMannaAppWeb.Live.NftCardLive
 
 
   def mount(_params, _session, socket) do
@@ -21,13 +23,12 @@ defmodule DigitalMannaAppWeb.Live.NftsDashboardLive do
   def render(assigns) do
 
     ~H"""
-      <h1>Digital Manna NFTs Dashboard</h1>
       <%= if length(@nfts) > 0 do %>
-        <ul>
+      <div class="grid  grid-cols-3 gap-4">
           <%= for nft <- @nfts  do %>
-            <li> <%= nft.name %></li>
+            <%= live_component(NftCardLive, nft: nft) %>
           <% end %>
-        </ul>
+      </div>
       <% end %>
     """
   end
