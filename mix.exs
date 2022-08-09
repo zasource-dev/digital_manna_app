@@ -51,6 +51,8 @@ defmodule DigitalMannaApp.MixProject do
       {:neuron, "~> 5.0.0"},
       {:mox, "~> 0.5.2", only: :test},
       {:tailwind, "~> 0.1", runtime: Mix.env() == :dev},
+      {:ex_machina, "~> 2.7.0", only: :test},
+      {:faker, "~> 0.17", only: :test},
     ]
   end
 
