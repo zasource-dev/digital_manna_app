@@ -12,14 +12,15 @@ defmodule DigitalMannaApp.Nfts.Persistance do
     SpaceXApi.fetch_ships!
       |> process_nfts()
       |> SpaceXRepo.inserts_all_nfts()
+
+    {:ok, "Inserted all nfts successfully"}
   end
 
   defp process_nfts(nfts) do
-    nfts
-    |> Enum.map(&format_nft/1)
+    nfts |> Enum.map(&format_nft/1)
   end
 
-  defp format_nft(%{ "mmsi" => mssi, "type" => type } = nft) do
+  defp format_nft(nft = %{ "mmsi" => mssi, "type" => type }) do
     %{
       nft_id: nft["id"],
       name: nft["name"],
