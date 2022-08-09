@@ -15,9 +15,11 @@ defmodule DigitalMannaApp.Application do
       # Start the PubSub system
       {Phoenix.PubSub, name: DigitalMannaApp.PubSub},
       # Start the Endpoint (http/https)
-      DigitalMannaAppWeb.Endpoint
+      DigitalMannaAppWeb.Endpoint,
       # Start a worker by calling: DigitalMannaApp.Worker.start_link(arg)
       # {DigitalMannaApp.Worker, arg}
+      {DigitalMannaApp.Nfts.Server, :spacex },
+
     ]
 
     # See https://hexdocs.pm/elixir/Supervisor.html

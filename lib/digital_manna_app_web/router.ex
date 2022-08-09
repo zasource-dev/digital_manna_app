@@ -17,7 +17,8 @@ defmodule DigitalMannaAppWeb.Router do
   scope "/", DigitalMannaAppWeb do
     pipe_through :browser
 
-    get "/", PageController, :index
+    live("/", Live.NftsDashboardLive)
+
   end
 
   # Other scopes may use custom stacks.
