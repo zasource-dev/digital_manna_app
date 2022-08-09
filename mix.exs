@@ -53,6 +53,7 @@ defmodule DigitalMannaApp.MixProject do
       {:tailwind, "~> 0.1", runtime: Mix.env() == :dev},
       {:ex_machina, "~> 2.7.0", only: :test},
       {:faker, "~> 0.17", only: :test},
+      {:httpoison, "~> 1.8"},
     ]
   end
 

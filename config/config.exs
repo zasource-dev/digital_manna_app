@@ -25,6 +25,7 @@ config :digital_manna_app, :spacex,
   url: "https://api.spacex.land/graphql/",
   secret: "spacex"
 
+config :digital_manna_app, ipfs_url: "https://ipfs.io/ipfs"
 # Clients
 config :digital_manna_app,
   foundation_graph_client: DigitalMannaApp.Nfts.Foundation.GraphClient

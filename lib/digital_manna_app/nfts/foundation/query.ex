@@ -8,13 +8,8 @@ defmodule DigitalMannaApp.Nfts.Foundation.Query do
 
     nfts(orderBy: dateMinted, orderDirection: desc, first: $first) {
       id
-      tokenId
       tokenIPFSPath
       dateMinted
-       nftContract {
-        name
-
-       }
     }
   }
   """
