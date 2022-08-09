@@ -11,6 +11,7 @@ config :digital_manna_app, DigitalMannaApp.Repo,
   hostname: "localhost",
   database: "digital_manna_app_test#{System.get_env("MIX_TEST_PARTITION")}",
   pool: Ecto.Adapters.SQL.Sandbox,
+  port: 5433,
   pool_size: 10
 
 # We don't run a server during test. If one is required,
@@ -28,3 +29,9 @@ config :logger, level: :warn
 
 # Initialize plugs at runtime for faster test compilation
 config :phoenix, :plug_init_mode, :runtime
+
+
+# Mock Clients
+config :digital_manna_app, foundation_graph_client: DigitalMannaAppTest.Nfts.FoundationGraphQLClientMock
+config :digital_manna_app, :foundation,
+  url: "https://gateway.thegraph.com/api/"

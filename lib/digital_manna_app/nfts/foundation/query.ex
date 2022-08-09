@@ -4,8 +4,9 @@ defmodule DigitalMannaApp.Nfts.Foundation.Query do
   """
 
   @recent_nfts """
-  {
-    nfts(orderBy: dateMinted, orderDirection: desc, first: 20) {
+  query($first: Int) {
+
+    nfts(orderBy: dateMinted, orderDirection: desc, first: $first) {
       id
       tokenId
       tokenIPFSPath
