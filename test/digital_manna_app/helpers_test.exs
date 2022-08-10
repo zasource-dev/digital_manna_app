@@ -4,6 +4,7 @@ defmodule DigitalMannaAppTest.HelpersTest do
 
   import DigitalMannaAppTest.Factory
   import DigitalMannaApp.Helpers.MapHelper
+  import DigitalMannaApp.Helpers.URLHelper
 
   describe "Test Suite for Map Helpers"  do
 
@@ -25,6 +26,48 @@ defmodule DigitalMannaAppTest.HelpersTest do
       assert formatted_nft_map |> Map.has_key?(:description)
       assert formatted_nft_map |> Map.has_key?(:image)
       assert formatted_nft_map |> Map.has_key?(:minted_at)
+    end
+
+    test "that ipfs and arweave nft resources are grouped" do
+
+      raw_nfts = [%{
+        "dateMinted" => "1660107807",
+        "tokenIPFSPath" => "Qmcd1Lo228z7hXWRMopb8aNkd3JKjHNxMB1TLyrHFfPbaY/metadata.json",
+        "id" => "0xebc4e367334fe68e48080143211f95fb922c9f83-5",
+      },
+      %{
+        "id" => "0x691d0b75ed4551037eceb469f322b270d9fb13e7-4",
+        "tokenIPFSPath" => "https://arweave.net/C85V4MmKwf5z2r6lL58xyD2u47Wu-2Sito6HvDOMqf4",
+        "dateMinted" => "1659790807",
+      }]
+      # raw_nfts |> Enum.group_by(fn nft -> is_ipfs_url?() end)
+
+    end
+
+
+  end
+
+  describe "Test Suite for URL Helpers" do
+    test "that url matches pattern provided for .metadata.json" do
+
+      raw_nfts = [%{
+        "dateMinted" => "1660107807",
+        "tokenIPFSPath" => "Qmcd1Lo228z7hXWRMopb8aNkd3JKjHNxMB1TLyrHFfPbaY/metadata.json",
+        "id" => "0xebc4e367334fe68e48080143211f95fb922c9f83-5",
+      },
+      %{
+        "id" => "0x691d0b75ed4551037eceb469f322b270d9fb13e7-4",
+        "tokenIPFSPath" => "https://arweave.net/C85V4MmKwf5z2r6lL58xyD2u47Wu-2Sito6HvDOMqf4",
+        "dateMinted" => "1659790807",
+      }]
+
+      ipfs_nfts = raw_nfts |> Enum.filter(fn nft -> Map.get(nft, "tokenIPFSPath") |> is_ipfs_url?() end)
+
+
+      assert ipfs_nfts
+        |> Enum.map(&(Map.get(&1, "tokenIPFSPath")))
+        |> Enum.all?(&is_ipfs_url?/1)
+
     end
   end
 end
