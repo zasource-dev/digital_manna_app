@@ -17,8 +17,8 @@ defmodule DigitalMannaApp.Application do
       # Start the Endpoint (http/https)
       DigitalMannaAppWeb.Endpoint,
       # Start a worker by calling: DigitalMannaApp.Worker.start_link(arg)
-      # {DigitalMannaApp.Worker, arg}
-      # {DigitalMannaApp.Nfts.Server, :spacex },
+      {DigitalMannaApp.Nfts.Worker, [] },
+      {DigitalMannaApp.Nfts.Server, [] },
 
     ]
 

@@ -6,6 +6,14 @@ defmodule DigitalMannaApp.Helpers.URLHelper do
   @endpoint_ipfs Application.get_env(:digital_manna_app, :ipfs_url)
 
 
+  def match_nft_resource_url(token_ipfs_path) do
+    cond do
+      is_arweave_url?(token_ipfs_path) -> arweave_url(token_ipfs_path)
+      is_ipfs_url?(token_ipfs_path) -> ipfs_url(token_ipfs_path)
+      true -> IO.puts("Something went wrong: #{token_ipfs_path}")
+    end
+  end
+
   def is_ipfs_url?(token_ipfs_path), do: String.ends_with?(token_ipfs_path, "/metadata.json")
   def is_arweave_url?(token_ipfs_path), do: String.starts_with?(token_ipfs_path, "https://arweave.net/")
 

@@ -15,6 +15,7 @@ defmodule DigitalMannaApp.Nfts.Foundation.GraphClient do
   @endpoint_url Application.compile_env(:digital_manna_app, :foundation)[:url]
 
   alias DigitalMannaApp.Nfts.Foundation.Query
+  require Logger
 
 
   @doc """
@@ -32,8 +33,17 @@ defmodule DigitalMannaApp.Nfts.Foundation.GraphClient do
     with :ok <- connect(),
         {:ok, %Neuron.Response{ body: %{ "data" => %{ "nfts" => nfts } }}} <- Neuron.query(Query.get_recent_nfts(), %{ first: first})
     do
-      nfts
+      {:ok, nfts}
+    else
+      {:error, %HTTPoison.Error{id: nil, reason: reason}} ->
+        Logger.error("Failed to fetch NFTs due to #{reason}...")
+        {:error, "Failed to fetch NFTs due to #{reason}..."}
     end
+  end
+
+
+  def process_response() do
+
   end
 
   defp graphql_url() do

@@ -4,17 +4,28 @@ defmodule DigitalMannaApp.Nfts.Server do
   """
 
   use GenServer
-  alias DigitalMannaApp.Nfts.Persistance
+  require Logger
+
+  alias DigitalMannaApp.Nfts.Worker, as: NFTWorker
+  import DigitalMannaApp.Helpers.MapHelper
+
+
+
+  @server __MODULE__
+
+  @foundation_http_client Application.get_env(:digital_manna_app, :foundation_graph_client)
+  @ipfs_http_client Application.get_env(:digital_manna_app, :ipfs_http_client)
+
 
   # API
-  def start_link(api) do
-    GenServer.start_link(__MODULE__, api)
+  def start_link(opts) do
+    GenServer.start_link(__MODULE__, opts, name: @server)
   end
 
   # SERVER
 
-  def init(api) do
-    {:ok, %{:api => api}, {:continue, :schedule_next_run}}
+  def init(opts) do
+    {:ok, opts, {:continue, :schedule_next_run}}
   end
 
 
@@ -30,10 +41,27 @@ defmodule DigitalMannaApp.Nfts.Server do
   Poll nfts data when its time to refresh
   """
   def handle_info(:poll_nfts, state) do
-    case Persistance.fetch_and_update_nfts(state.api) do
-      {:ok, _message} -> {:noreply, state, {:continue, :schedule_next_run}}
-      err ->  IO.inspect(err)
+      Logger.info("Polling NFTs...")
 
-    end
+      case  @foundation_http_client.fetch_nfts(50) do
+        {:ok, nfts} ->
+          Logger.info("Fetched NFTs...#{length(nfts)}")
+
+          nfts
+          |> only_ipfs_tokens!()
+          |> batch_worker_tasks()
+
+        {:error, message} ->
+          Logger.error(message)
+      end
+
+
+      {:noreply, state, {:continue, :schedule_next_run}}
   end
+
+  defp batch_worker_tasks(nfts) do
+    nfts |> Enum.map(&run_worker/1)
+  end
+
+  defp run_worker(nft), do: NFTWorker.run(fn -> @ipfs_http_client.get(nft["tokenIPFSPath"]) end)
 end
