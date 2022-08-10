@@ -19,6 +19,6 @@ defmodule DigitalMannaApp.Nfts.FoundationRepo do
   def add_foundation_nft(attrs \\ %{}) do
     %FoundationNFT{}
     |> FoundationNFT.changeset(attrs)
-    |> Repo.insert!()
+    |> Repo.insert()
   end
 end

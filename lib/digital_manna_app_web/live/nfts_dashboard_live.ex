@@ -41,7 +41,7 @@ defmodule DigitalMannaAppWeb.Live.NftsDashboardLive do
 
   defp assign_nfts(socket) do
     assign(socket,
-      nfts: MannaNFTs.list_latest_nfts()
+      nfts: MannaNFTs.list_most_recent_nfts()
     )
   end
 end

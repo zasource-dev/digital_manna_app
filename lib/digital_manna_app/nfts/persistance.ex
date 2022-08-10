@@ -3,31 +3,29 @@ defmodule DigitalMannaApp.Nfts.Persistance do
   An NFT Miner Persistance Layer
   """
 
-  alias DigitalMannaApp.Nfts.SpaceX.Api, as: SpaceXApi
-  alias DigitalMannaApp.Nfts.SpaceXRepo
+  alias DigitalMannaApp.Nfts.Manna, as: MannaNFTs
 
-  def fetch_and_update_nfts(_api = nil), do: fetch_and_update_nfts(:spacex)
+  @ipfs_url Application.compile_env(:digital_manna_app, :ipfs_url)
 
-  def fetch_and_update_nfts(_api = :spacex) do
-    SpaceXApi.fetch_ships!
-      |> process_nfts()
-      |> SpaceXRepo.inserts_all_nfts()
-
-    {:ok, "Inserted all nfts successfully"}
+  def save_nft(nft) do
+    nft
+    |> format_nft()
+    |> MannaNFTs.add_foundation_nft()
   end
 
   defp process_nfts(nfts) do
     nfts |> Enum.map(&format_nft/1)
   end
 
-  defp format_nft(nft = %{ "mmsi" => mssi, "type" => type }) do
+  defp format_nft(_nft = [description: description, image: image, name: name]) do
     %{
-      nft_id: nft["id"],
-      name: nft["name"],
-      description: type,
-      image: placement_image(nft["image"]),
-      minted_at:  transform_minted_at(mssi)
+      nft_id: image |> String.replace("ipfs://", ""),
+      name: name,
+      description: description,
+      image: image |> String.replace("ipfs://", "#{@ipfs_url}/"),
+      minted_at:  transform_minted_at(nil)
     }
+    # "ipfs://QmT4sR85xRYga7ad1K82dWGtYwpUWgNzVrKH78wdZ5Ysw5/nft.png"
   end
 
   defp placement_image(_image = nil), do: "https://placeholder.pics/svg/300/4EFFA6-4963FF/FF95EA-CBE7FF/This%20is%20an%20NFT"

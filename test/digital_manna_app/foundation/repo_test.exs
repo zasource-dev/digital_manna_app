@@ -27,6 +27,6 @@ defmodule DigitalMannaAppTest.Nfts.FoundationRepoTest do
       minted_at: foundation_nft.minted_at
     }
 
-    assert %FoundationNFT{} = FoundationRepo.add_foundation_nft(foundation_nft_fields)
+    assert {:ok, foundation_nft} = FoundationRepo.add_foundation_nft(foundation_nft_fields)
   end
 end

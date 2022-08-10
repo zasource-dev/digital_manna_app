@@ -4,6 +4,8 @@ defmodule DigitalMannaApp.Nfts.Worker do
   use GenServer
   require Logger
 
+  alias DigitalMannaApp.Nfts.Persistance
+
   @me __MODULE__
 
   # API
@@ -27,6 +29,7 @@ defmodule DigitalMannaApp.Nfts.Worker do
   def handle_info({_task, {:ok, result}}, state) do
     Logger.info("#{inspect(result)}")
     # 1. Save resulted nfts
+    Persistance.save_nft(result.body)
 
     {:noreply, state}
   end
