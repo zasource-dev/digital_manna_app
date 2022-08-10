@@ -44,6 +44,24 @@ defmodule DigitalMannaAppTest.HelpersTest do
 
     end
 
+    test "that ipfs tokens are returned only" do
+
+      raw_nfts = [%{
+        "dateMinted" => "1660107807",
+        "tokenIPFSPath" => "Qmcd1Lo228z7hXWRMopb8aNkd3JKjHNxMB1TLyrHFfPbaY/metadata.json",
+        "id" => "0xebc4e367334fe68e48080143211f95fb922c9f83-5",
+      },
+      %{
+        "id" => "0x691d0b75ed4551037eceb469f322b270d9fb13e7-4",
+        "tokenIPFSPath" => "https://arweave.net/C85V4MmKwf5z2r6lL58xyD2u47Wu-2Sito6HvDOMqf4",
+        "dateMinted" => "1659790807",
+      }]
+      # raw_nfts |> Enum.group_by(fn nft -> is_ipfs_url?() end)
+      {:ok, ipfs_token_results} = raw_nfts |> only_ipfs_tokens()
+
+      assert length(ipfs_token_results) == 1
+    end
+
 
   end
 
