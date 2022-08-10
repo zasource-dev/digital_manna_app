@@ -28,7 +28,8 @@ config :digital_manna_app, :spacex,
 config :digital_manna_app, ipfs_url: "https://ipfs.io/ipfs"
 # Clients
 config :digital_manna_app,
-  foundation_graph_client: DigitalMannaApp.Nfts.Foundation.GraphClient
+  foundation_graph_client: DigitalMannaApp.Nfts.Foundation.GraphClient,
+  ipfs_http_client: DigitalMannaApp.Nfts.Foundation.IPFSHttpClient
 
 # Configures the mailer
 #

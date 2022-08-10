@@ -16,6 +16,7 @@ defmodule DigitalMannaApp.Nfts.Foundation.GraphClient do
 
   alias DigitalMannaApp.Nfts.Foundation.Query
 
+
   @doc """
     Establishes a connection to the Foundation GraphQL API
   """
@@ -28,8 +29,9 @@ defmodule DigitalMannaApp.Nfts.Foundation.GraphClient do
   """
   @spec fetch_nfts(integer()) :: List.t
   def fetch_nfts(first \\ 10) when is_number(first) do
-    with :ok <- connect() do
-      {:ok, %Neuron.Response{ body: %{ "data" => %{ "nfts" => nfts } }} } = Neuron.query(Query.get_recent_nfts(), %{ first: first})
+    with :ok <- connect(),
+        {:ok, %Neuron.Response{ body: %{ "data" => %{ "nfts" => nfts } }}} <- Neuron.query(Query.get_recent_nfts(), %{ first: first})
+    do
       nfts
     end
   end
