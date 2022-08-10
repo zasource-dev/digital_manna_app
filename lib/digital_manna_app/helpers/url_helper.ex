@@ -14,6 +14,11 @@ defmodule DigitalMannaApp.Helpers.URLHelper do
     end
   end
 
+  def get_ipfs_image_url(image_url) do
+    image_url
+    |> String.replace("ipfs://", "#{@endpoint_ipfs}/")
+  end
+
   def is_ipfs_url?(token_ipfs_path), do: String.ends_with?(token_ipfs_path, "/metadata.json")
   def is_arweave_url?(token_ipfs_path), do: String.starts_with?(token_ipfs_path, "https://arweave.net/")
 

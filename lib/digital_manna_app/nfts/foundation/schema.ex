@@ -34,4 +34,12 @@ defmodule DigitalMannaApp.Nfts.Schema.FoundationNFT do
   def ordered_by_minted_at(query) do
     from [foundation_nft: fnd_nft] in query, order_by: [desc: :minted_at]
   end
+
+  def is_nft_id(query, nft_id) do
+    from [foundation_nft: fnd_nft] in query, where: fnd_nft.nft_id == ^nft_id
+  end
+
+  def limit_to(query, limit \\ 20) do
+    from [foundation_nft: fnd_nft] in query, limit: ^limit
+  end
 end

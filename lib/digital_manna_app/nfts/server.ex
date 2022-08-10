@@ -43,7 +43,7 @@ defmodule DigitalMannaApp.Nfts.Server do
   def handle_info(:poll_nfts, state) do
       Logger.info("Polling NFTs...")
 
-      case  @foundation_http_client.fetch_nfts(50) do
+      case  @foundation_http_client.fetch_nfts(20) do
         {:ok, nfts} ->
           Logger.info("Fetched NFTs...#{length(nfts)}")
 
@@ -63,5 +63,5 @@ defmodule DigitalMannaApp.Nfts.Server do
     nfts |> Enum.map(&run_worker/1)
   end
 
-  defp run_worker(nft), do: NFTWorker.run(fn -> @ipfs_http_client.get(nft["tokenIPFSPath"]) end)
+  defp run_worker(nft), do: NFTWorker.run(Agent.start_link(fn -> nft end),fn -> @ipfs_http_client.get(nft["tokenIPFSPath"]) end)
 end

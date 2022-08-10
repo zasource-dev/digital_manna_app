@@ -4,8 +4,8 @@ defmodule DigitalMannaApp.Nfts.Persistance do
   """
 
   alias DigitalMannaApp.Nfts.Manna, as: MannaNFTs
+  import DigitalMannaApp.Helpers.URLHelper
 
-  @ipfs_url Application.compile_env(:digital_manna_app, :ipfs_url)
 
   def save_nft(nft) do
     nft
@@ -17,15 +17,14 @@ defmodule DigitalMannaApp.Nfts.Persistance do
     nfts |> Enum.map(&format_nft/1)
   end
 
-  defp format_nft(_nft = [description: description, image: image, name: name]) do
+  defp format_nft(_nft = [nft_id: nft_id,  name: name, description: description, image: image, minted_at: minted_at]) do
     %{
-      nft_id: image |> String.replace("ipfs://", ""),
+      nft_id: nft_id,
       name: name,
       description: description,
-      image: image |> String.replace("ipfs://", "#{@ipfs_url}/"),
-      minted_at:  transform_minted_at(nil)
+      image: get_ipfs_image_url(image),
+      minted_at:  minted_at |> String.to_integer() |> transform_minted_at()
     }
-    # "ipfs://QmT4sR85xRYga7ad1K82dWGtYwpUWgNzVrKH78wdZ5Ysw5/nft.png"
   end
 
   defp placement_image(_image = nil), do: "https://placeholder.pics/svg/300/4EFFA6-4963FF/FF95EA-CBE7FF/This%20is%20an%20NFT"

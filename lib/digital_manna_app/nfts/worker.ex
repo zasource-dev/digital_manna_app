@@ -17,19 +17,43 @@ defmodule DigitalMannaApp.Nfts.Worker do
 
 
    # SERVER
-  def run(fun) do
-    GenServer.cast(@me, {:run, fun})
+  def run(nft, fun) do
+    {:ok, nft_pid} = nft
+    GenServer.cast(@me, {:run, fun, nft_pid})
   end
 
-  def handle_cast({:run, fun}, state) do
+  def handle_cast({:run, fun, nft_pid}, state) do
     Task.async(fun)
-    {:noreply, state}
+
+    updated_state = [nft_pid]
+    {:noreply, updated_state}
   end
 
   def handle_info({_task, {:ok, result}}, state) do
-    Logger.info("#{inspect(result)}")
+    Logger.info("Successfully fetch nft information!")
+
+    Logger.info("1. Getting raw nft data...")
+
     # 1. Save resulted nfts
-    Persistance.save_nft(result.body)
+    [ nft_pid | _pids_tail] = state
+
+    %{ "dateMinted" => dateMinted, "id" => id, "tokenIPFSPath" => _tokenIPFSPath } = nft_pid |> Agent.get(fn raw_nft -> raw_nft end)
+
+
+
+    nft_manna_entry = [
+      nft_id: id,
+      name: Access.get(result.body, :name),
+      description: Access.get(result.body, :description),
+      image: Access.get(result.body, :image),
+      minted_at: dateMinted
+    ]
+
+    Logger.info("2. Saving raw nft data...")
+    Logger.info("#{inspect(nft_manna_entry)}")
+    Persistance.save_nft(nft_manna_entry)
+
+    Process.exit(nft_pid, :normal)
 
     {:noreply, state}
   end
