@@ -6,7 +6,6 @@ config :digital_manna_app, DigitalMannaApp.Repo,
   password: "postgres",
   hostname: "localhost",
   database: "digital_manna_app_dev",
-  port: 5433,
   show_sensitive_data_on_connection_error: true,
   pool_size: 10
 
