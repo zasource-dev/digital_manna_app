@@ -13,8 +13,8 @@ defmodule DigitalMannaApp.Nfts.Server do
 
   @server __MODULE__
 
-  @foundation_http_client Application.get_env(:digital_manna_app, :foundation_graph_client)
-  @ipfs_http_client Application.get_env(:digital_manna_app, :ipfs_http_client)
+  @foundation_http_client Application.compile_env(:digital_manna_app, :foundation_graph_client)
+  @ipfs_http_client Application.compile_env(:digital_manna_app, :ipfs_http_client)
 
 
   # API
@@ -63,5 +63,5 @@ defmodule DigitalMannaApp.Nfts.Server do
     nfts |> Enum.map(&run_worker/1)
   end
 
-  defp run_worker(nft), do: NFTWorker.run(Agent.start_link(fn -> nft end),fn -> @ipfs_http_client.get(nft["tokenIPFSPath"]) end)
+  defp run_worker(nft), do: NFTWorker.run(Agent.start_link(fn -> nft end), fn -> @ipfs_http_client.get(nft["tokenIPFSPath"]) end)
 end

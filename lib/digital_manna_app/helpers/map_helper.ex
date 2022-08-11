@@ -9,7 +9,7 @@ def map_nft_to_required_fields(_raw_nft = %{
   "dateMinted" => dateMinted,
   "tokenIPFSPath" => tokenIPFSPath,
   "id" => id,
-  "nftContract" => %{ "name" => name }
+  "nftContract" => %{"name" => name}
 }) do
 
   %{

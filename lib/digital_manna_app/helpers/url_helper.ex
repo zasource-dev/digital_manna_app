@@ -3,7 +3,7 @@ defmodule DigitalMannaApp.Helpers.URLHelper do
     A URL Helper to assist with nft url resources
   """
 
-  @endpoint_ipfs Application.get_env(:digital_manna_app, :ipfs_url)
+  @endpoint_ipfs Application.compile_env(:digital_manna_app, :ipfs_url)
 
 
   def match_nft_resource_url(token_ipfs_path) do

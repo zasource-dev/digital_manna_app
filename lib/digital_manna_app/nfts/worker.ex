@@ -35,9 +35,9 @@ defmodule DigitalMannaApp.Nfts.Worker do
     Logger.info("1. Getting raw nft data...")
 
     # 1. Save resulted nfts
-    [ nft_pid | _pids_tail] = state
+    [nft_pid | _pids_tail] = state
 
-    %{ "dateMinted" => dateMinted, "id" => id, "tokenIPFSPath" => _tokenIPFSPath } = nft_pid |> Agent.get(fn raw_nft -> raw_nft end)
+    %{"dateMinted" => date_minted, "id" => id, "tokenIPFSPath" => _token_ipfs_path} = nft_pid |> Agent.get(fn raw_nft -> raw_nft end)
 
 
 
@@ -46,7 +46,7 @@ defmodule DigitalMannaApp.Nfts.Worker do
       name: Access.get(result.body, :name),
       description: Access.get(result.body, :description),
       image: Access.get(result.body, :image),
-      minted_at: dateMinted
+      minted_at: date_minted
     ]
     Logger.info("2. Saving raw nft data...")
     Logger.info("#{inspect(nft_manna_entry)}")

@@ -5,8 +5,8 @@ defmodule DigitalMannaAppTest.Nfts.FoundationGraphClientTest do
 
 
 
- @foundation_graph_client Application.get_env(:digital_manna_app, :foundation_graph_client)
- @foundation_graph_url Application.get_env(:digital_manna_app, :foundation)[:url]
+ @foundation_graph_client Application.compile_env(:digital_manna_app, :foundation_graph_client)
+ @foundation_graph_url Application.compile_env(:digital_manna_app, :foundation)[:url]
 
  setup :verify_on_exit!
 

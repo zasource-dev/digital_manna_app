@@ -19,7 +19,7 @@ defmodule DigitalMannaApp.Nfts.SpaceX.Api do
 
   @spec fetch_ships! :: List.t
   def fetch_ships!() do
-    {:ok, %Neuron.Response{ body: %{ "data" => data }} } = fetch_ships()
+    {:ok, %Neuron.Response{body: %{"data" => data}}} = fetch_ships()
     Map.get(data, "ships")
   end
 

@@ -31,7 +31,7 @@ defmodule DigitalMannaApp.Nfts.Foundation.GraphClient do
   @spec fetch_nfts(integer()) :: List.t
   def fetch_nfts(first \\ 10) when is_number(first) do
     with :ok <- connect(),
-        {:ok, %Neuron.Response{ body: %{ "data" => %{ "nfts" => nfts } }}} <- Neuron.query(Query.get_recent_nfts(), %{ first: first})
+        {:ok, %Neuron.Response{body: %{"data" => %{"nfts" => nfts}}}} <- Neuron.query(Query.get_recent_nfts(), %{first: first})
     do
       {:ok, nfts}
     else
