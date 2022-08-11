@@ -37,8 +37,16 @@ defmodule DigitalMannaApp.Nfts.FoundationRepo do
   end
 
   defp insert_nft_entry(attrs) do
-    %FoundationNFT{}
-    |> FoundationNFT.changeset(attrs)
-    |> Repo.insert()
+    inserts_all_nfts([attrs])
   end
+
+  defp inserts_all_nfts(nfts) do
+    opts  = [
+      on_conflict: :nothing
+    ]
+
+    Repo.insert_all(FoundationNFT, nfts, opts)
+  end
+
+
 end

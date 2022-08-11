@@ -19,7 +19,7 @@ config :digital_manna_app, DigitalMannaAppWeb.Endpoint,
 
 config :digital_manna_app, :foundation,
   url: "https://gateway.thegraph.com/api/[api-key]/subgraphs/id/33mhqfVG26N2V8pGNoEpnF5pSr2LbLg8VQRy7PL5EydY",
-  secret: System.get_env("FOUNDATION_GRAPH_API_KEY") || "1a0b45781499d71087c693bb463ce59b"
+  secret: System.get_env("FOUNDATION_GRAPH_API_KEY") || "eac1eb884c5b428037008bf2fd997f5e"
 
 config :digital_manna_app, :spacex,
   url: "https://api.spacex.land/graphql/",

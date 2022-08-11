@@ -48,7 +48,6 @@ defmodule DigitalMannaApp.Nfts.Worker do
       image: Access.get(result.body, :image),
       minted_at: dateMinted
     ]
-
     Logger.info("2. Saving raw nft data...")
     Logger.info("#{inspect(nft_manna_entry)}")
     Persistance.save_nft(nft_manna_entry)

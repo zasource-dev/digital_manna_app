@@ -55,6 +55,9 @@ if config_env() == :prod do
     ],
     secret_key_base: secret_key_base
 
+  config :digital_manna_app, :foundation,
+    secret: System.get_env("FOUNDATION_GRAPH_API_KEY")
+
   # ## Using releases
   #
   # If you are doing OTP releases, you need to instruct Phoenix
