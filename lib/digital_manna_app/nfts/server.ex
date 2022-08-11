@@ -43,7 +43,7 @@ defmodule DigitalMannaApp.Nfts.Server do
   def handle_info(:poll_nfts, state) do
       Logger.info("Polling NFTs...")
 
-      case  @foundation_http_client.fetch_nfts(20) do
+      case  @foundation_http_client.fetch_nfts(50) do
         {:ok, nfts} ->
           Logger.info("Fetched NFTs...#{length(nfts)}")
 

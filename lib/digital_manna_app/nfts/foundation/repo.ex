@@ -26,14 +26,7 @@ defmodule DigitalMannaApp.Nfts.FoundationRepo do
   end
 
   def add_foundation_nft(attrs \\ %{}) do
-
-    case  get_one_nft(attrs.nft_id)  do
-      true -> Logger.error("NFT already Exists")
-      false ->
-        Logger.error("Adding new Foundation NFT")
-        insert_nft_entry(attrs)
-    end
-
+      insert_nft_entry(attrs)
   end
 
   defp insert_nft_entry(attrs) do
